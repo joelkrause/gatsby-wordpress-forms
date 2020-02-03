@@ -10,3 +10,4 @@
 define( 'GATSBY_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
 include(GATSBY_PLUGIN_PATH.'inc/options_page.php');
+include(GATSBY_PLUGIN_PATH.'inc/rest_api.php');
