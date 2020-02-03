@@ -10,9 +10,6 @@ function wp_api_add_posts_endpoints(){
 function post_form(WP_REST_Request $request){
     $options = get_option( 'gatsby_form_settings' );
     $to = $options['gatsby_email_to_address'];;
-    $subject = 'New Enquiry';
-    $body = '';
-    $headers = array('Content-Type: text/html; charset=UTF-8');
 
     $body.='<table>';
     foreach ($request->get_params() as $key => $value){
@@ -25,10 +22,19 @@ function post_form(WP_REST_Request $request){
                 $body.=$value;
             $body.='</td>';
         $body.='</tr>';
+        if(strpos($key, 'email') !== false){
+            $reply_to = $key;
+        }
     }
     $body.='</table>';
 
+    echo $reply_to;
     echo $body;
+
+    $subject = 'New Enquiry';
+    $body = '';
+    $headers[] = 'Reply-To: Name Name <ijk@lmn.op>';
+    $headers[] = 'Content-Type: text/html; charset=UTF-8';
     
     wp_mail( $to, $subject, $body, $headers );
 }
